@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>TubeTracker</title>
+    <title>Jad Azaizeh</title>
     <link rel="stylesheet" href="https://bootswatch.com/5/cyborg/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -11,6 +11,11 @@
 <body class="p-4">
     <div class="container">
         <h1 class="text-center text-primary mb-4">🎵 Excercise Songs List</h1>
+        <div id="savedSongs" class="alert alert-info">
+            <strong>Saved Songs from LocalStorage:</strong>
+            <ul id="savedSongsList" class="mt-2"></ul>
+        </div>
+
 
         <div class="card border-primary mb-4">
             <div class="card-body">
@@ -24,6 +29,9 @@
                         <input type="url" id="url" class="form-control" placeholder="YouTube URL" required>
                     </div>
                     <div class="col-md-2">
+                        <input type="number" id="rating" class="form-control" placeholder="Rating 1-10" min="1" max="10" required>
+                    </div>
+                    <div class="col-md-2">
                         <button type="submit" id="submitBtn" class="btn btn-success w-100">
                             <i class="fas fa-plus"></i> Add
                         </button>
@@ -32,12 +40,27 @@
             </div>
         </div>
 
-        <div class="d-flex justify-content-between mb-3">
+        <div class="d-flex justify-content-end mb-3">
+            <button id="toggleViewBtn" class="btn btn-secondary">
+                <i class="fas fa-th"></i> Card View
+            </button>
+        </div>
+
+
+        <div class="d-flex justify-content-between mb-3 align-items-center">
             <input type="text" id="search" class="form-control w-50" placeholder="Search...">
-            <select id="sort" class="form-select w-25">
-                <option value="newest">Newest First</option>
-                <option value="az">A-Z</option>
-            </select>
+
+            <div class="w-50 d-flex justify-content-around">
+                <label>
+                    <input type="radio" name="sortOption" value="name"> Name
+                </label>
+                <label>
+                    <input type="radio" name="sortOption" value="date" checked> Date Added
+                </label>
+                <label>
+                    <input type="radio" name="sortOption" value="rating"> Rating
+                </label>
+            </div>
         </div>
 
         <table class="table table-hover">
@@ -45,12 +68,24 @@
                 <tr>
                     <th>Title</th>
                     <th>Link</th>
+                    <th>Rating</th>
                     <th class="text-end">Actions</th>
                 </tr>
             </thead>
             <tbody id="songList"></tbody>
         </table>
     </div>
+
+    <div id="cardContainer" class="row g-3" style="display:none;"></div>
+
+
+    <div id="playerModal" class="modal" tabindex="-1" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); justify-content:center; align-items:center;">
+        <div class="modal-content bg-dark p-3" style="max-width:700px; width:90%; position:relative;">
+            <button id="closePlayer" style="position:absolute; top:5px; right:10px;" class="btn btn-danger btn-sm">Close</button>
+            <iframe id="playerFrame" width="100%" height="400" src="" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 
